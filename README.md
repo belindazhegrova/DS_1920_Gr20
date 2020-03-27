@@ -2,11 +2,14 @@
 Projekti ne lëndën “Siguria e të dhënave”
 
 Qëllimi:
-Qëllimi i këtij projekti është që të krijohet një aplikacion për teknikat klasike të enkriptimit dhe dekripritmit të përpunimit  të të  dhënave tekstuale.Ky aplikacion demostrohet duke shkruar një program të thjeshtë i cili ofron disa sherbime tekstuale.
+Qëllimi i këtij projekti është që të krijohet një aplikacion për teknikat klasike 
+të enkriptimit dhe dekripritmit të përpunimit  të të  dhënave tekstuale.
+Ky aplikacion demostrohet duke shkruar një program të thjeshtë i cili ofron disa sherbime tekstuale.
 Permbajta :
 
 Detyra1:Komanda Frequency
-Kjo komand numron frekuencën e paraqitjes së simboleve  dhe ASCII bar-grafi qe permes # vizualizon perqinjdet e simboleve në tekstin tonë përmes programit te shkruar nga ne në command prompt ose git bash përmes argumenteve:
+Kjo komand numron frekuencën e paraqitjes së simboleve  dhe ASCII bar-grafi qe permes # vizualizon 
+perqinjdet e simboleve në tekstin tonë përmes programit te shkruar nga ne në command prompt ose git bash përmes argumenteve:
 Nese shenojme “Pershendetje nga FIEK! Në ekran do të  shtypet:
 
 <img width="183"  alt="frequency" src="https://user-images.githubusercontent.com/52915274/77795540-fdcc6b00-706d-11ea-8cbc-37871075057e.png">
