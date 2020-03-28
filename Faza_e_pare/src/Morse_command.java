@@ -94,12 +94,12 @@ public class Morse_command {
  		      {
  		     	 if(s.charAt(p) == '.') {
  		     		System.out.print(s.charAt(p));
- 		     		 play("..src\\beep-02.wav");
+ 		     		 play("..\\src\\beep-02.wav");
  		     		Thread.sleep(250);}
  		     	else if(s.charAt(p) == '-')
  		     	 {
  		     		System.out.print(s.charAt(p));
-		     		  play("..src\\beep-09.wav");
+		     		  play("..\\src\\beep-09.wav");
 		     		 Thread.sleep(250);}
  		     else if(s.charAt(p) == ' ')
  				try {System.out.print(s.charAt(p));
