@@ -2,14 +2,11 @@
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.InputStream;
-import java.util.Scanner;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 
 public class Morse_command {
-    static	Scanner input = new Scanner(System.in);
 	static String morseEncode(char x)  
 	 {  
 	     switch (x)  
@@ -143,7 +140,6 @@ public class Morse_command {
 		
 		 public static String Morse_Decode(String s) {
 			 
-			
 		        String[] convert = s.split(" ");
 		        String output="";
 
