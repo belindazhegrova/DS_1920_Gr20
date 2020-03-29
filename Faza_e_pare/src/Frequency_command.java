@@ -1,5 +1,4 @@
 
-import java.util.Scanner;
 import java.util.stream.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,7 +21,7 @@ public class Frequency_command {
 	         System.out.println("Total= "+str.length());
 	      
 	         
-	        int t;
+	        int measure;
 	        for (int j = 0; j < 256; j++)  {
 	            if (counter[j] != 0 && counter[j]!=' ') {
 	       
@@ -39,16 +38,15 @@ public class Frequency_command {
 	      
 	        for (int j = 0; j < 256; j++)  {
 	            if (counter[j] != 0 && counter[j]!=' ') {
-	            	 t=(int)(((double)counter[j]/str.length())*100-((double)counter[j]/str.length())*80);
+	            	 measure=(int)(((double)counter[j]/str.length())*100-((double)counter[j]/str.length())*80);
 	            	
 	         
 	                   double q=(((double)counter[j]/str.length())*100);
-	                   System.out.printf((char) j + ": ["+ len.substring(0,t) +"   ]"+"%.2f",q);
+	                   System.out.printf((char) j + ": ["+ len.substring(0,measure) +"   ]"+"%.2f",q);
 	                   System.out.print("%");
 	                   System.out.println("");
 	                 
 	               }
 	          }  
 	       }
-
           }
