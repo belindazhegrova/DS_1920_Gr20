@@ -22,7 +22,7 @@ public class Four_Square_command {
             }
         }
     }
-
+//The method that removes the whitespaces and converts all "j" to "i"
  
     private static String clean(String input)
     {
@@ -38,18 +38,18 @@ public class Four_Square_command {
         return clean.toString();
     }
 
-   
-    private static char[][] generateKeyTable(String keyword)
+   //the method that generates the keywords and puts them into matrix
+    private static char[][] keywords(String keyword)
     {
         keyword = clean(keyword);
-        char[][] keyTable = new char[5][5];
+        char[][] keys = new char[5][5];
         List<Character> used = new ArrayList<Character>();
         int x = 0, y = 0;
         for (char c : keyword.toCharArray())
         {
             if (!used.contains(c))
             {
-                keyTable[x][y] = c;
+                keys[x][y] = c;
                 used.add(c);
                 x++;
                 if (x == 5)
@@ -58,7 +58,7 @@ public class Four_Square_command {
                     y++;
                     if (y == 5) 
                     {
-                        return keyTable;
+                        return keys;
                     }
                 }
             }
@@ -67,7 +67,7 @@ public class Four_Square_command {
         {
             if (!used.contains(c))
             {
-                keyTable[x][y] = c;
+                keys[x][y] = c;
                 x++;
                 if (x == 5)
                 {
@@ -75,15 +75,14 @@ public class Four_Square_command {
                     y++;
                     if (y == 5)
                     {
-                        return keyTable;
+                        return keys;
                     }
                 }
             }
         }
-        return keyTable;
+        return keys;
     }
 
-  
     private static String[] split(String plaintext) 
     {
         if (plaintext.length() % 2 != 0) 
@@ -99,13 +98,14 @@ public class Four_Square_command {
         }
         return pairs;
     }
+//The method that encrypts the plaintext with Four Square cipher 
 
     public static String encrypt(String keyword1, String keyword2,String plaintext) 
     {
         plaintext = clean(plaintext);
         String[] pairs = split(plaintext);
-        char[][] keytable1 = generateKeyTable(keyword1);
-        char[][] keytable2 = generateKeyTable(keyword2);
+        char[][] keys1 = keywords(keyword1);
+        char[][] keys2 = keywords(keyword2);
         char first, second;
         int xFirst = 0, yFirst = 0, xSecond = 0, ySecond = 0;
         StringBuilder ciphertext = new StringBuilder();
@@ -128,16 +128,16 @@ public class Four_Square_command {
                     }
                 }
             }
-            ciphertext.append(keytable1[xSecond][yFirst]).append(keytable2[xFirst][ySecond]);
+            ciphertext.append(keys1[xSecond][yFirst]).append(keys2[xFirst][ySecond]);
         }
         return ciphertext.toString();
     }
-
+//The method that decrypts the ciphertext with Four Square cipher 
     public static String decrypt( String keyword1, String keyword2,String ciphertext)
     {
         String[] pairs = split(ciphertext);
-        char[][] keytable1 = generateKeyTable(keyword1);
-        char[][] keytable2 = generateKeyTable(keyword2);
+        char[][] keys1 = keywords(keyword1);
+        char[][] keys2 = keywords(keyword2);
         char first, second;
         int xFirst = 0, yFirst = 0, xSecond = 0, ySecond = 0;
         StringBuilder plaintext = new StringBuilder();
@@ -149,11 +149,11 @@ public class Four_Square_command {
             {
                 for (int x = 0; x < 5; x++)
                 {
-                    if (keytable1[x][y] == first)
+                    if (keys1[x][y] == first)
                     {
                         xFirst = x;
                         yFirst = y;
-                    } else if (keytable2[x][y] == second)
+                    } else if (keys2[x][y] == second)
                     {
                         xSecond = x;
                         ySecond = y;
@@ -163,8 +163,5 @@ public class Four_Square_command {
             plaintext.append(ALPHABET_SQUARE[xSecond][yFirst]).append(ALPHABET_SQUARE[xFirst][ySecond]);
         }
         return plaintext.toString();
-    }
-
-
-   
+    }   
 }
