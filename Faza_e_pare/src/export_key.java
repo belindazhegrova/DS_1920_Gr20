@@ -1,6 +1,5 @@
 
-import java.io.*;
-import java.util.Base64; 
+import java.io.*; 
 public class export_key
 { 
   static String privatekey(String name) throws FileNotFoundException
@@ -54,6 +53,7 @@ public class export_key
 	 String s= "keys/";
 	 String thepath=s.concat(t[1]);
 	 String content=publickey(t[0]);
+	     System.out.println("Celesi public u ruajt ne fajllin " +"'"+ thepath + "'");
 	 if(n.endsWith(".xml")==false)
 		 printss(t[0]);
 	 else {
@@ -67,6 +67,7 @@ public class export_key
 	  String s= "keys/";
 		 String thepath=s.concat(t[1]);
 		 String content=privatekey(t[0]);
+	    System.out.println("Celesi privat u ruajt ne fajllin " +"'"+ thepath + "'");
 		 if(n.endsWith(".xml")==false)
 			 prints(t[0]);
 		 else {
