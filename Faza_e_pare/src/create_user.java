@@ -37,14 +37,16 @@ public class create_user {
         String name1="keys/";
 		  String user=name1.concat(name.concat(".xml"));
 		  String userpub=name1.concat(name.concat(".pub.xml"));
-		  File f = new File(name);
+		   File f1 = new File(user);
+                   File f2 = new File(userpub);
 	    	
 	    	 String p =name.substring(name.indexOf("/") + 1);
-			  if (f.isFile()) 
+			  if (f1.exists()&&f2.exists()) {
 	       	  System.out.println("Gabim: Celesi "+ "'"+p+"'"+ " ekziston paraprakisht.");
+			  }
 	         else  {
-	       System.out.println("Eshte krijuar celesi privat " +"'"+ user + "'");
-	       System.out.println("Eshte krijuar celesi publik " +"'"+ userpub + "'");
+	       System.out.println("Eshte krijuar celesi privat " +"'"+ f1 + "'");
+	       System.out.println("Eshte krijuar celesi publik " +"'"+ f2 + "'");
 
 	       
 
