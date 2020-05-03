@@ -35,6 +35,55 @@ public class Program {
                                System.out.println("USAGE: choose one of the command frequency|morse-code|four-square");
                                System.exit(1);}
 				     }
+				 case "create-user": create_user.create1(args[1]);
+                         break;
+                        case "delete-user": delete_user.delete1(args[1]);
+                        break;
+                        case "export-key": switch(args[1]) {
+                        case "public" :
+                        	try {
+                        	String n= (args[2].concat(" ")).concat(args[3]);
+                        	
+                        	export_key.exportfilepub(n);}
+                        	catch (ArrayIndexOutOfBoundsException e) {
+                        		export_key.printss(args[2]);
+							}
+                        	
+                        break;
+                        case "private":
+                        	try {
+                            	String r= (args[2].concat(" ")).concat(args[3]);
+                        
+                            	export_key.exportfilepri(r);}
+                            	catch (ArrayIndexOutOfBoundsException e) {
+                            		export_key.prints(args[2]);
+    							}
+                            	
+
+                        break;
+
+
+                         default:{
+                        	 System.out.println("Gabim1");
+                           System.exit(1);
+                          }
+			     }
+                        break;
+                        case "import-key": if(args[2].startsWith("http"))
+                        	import_key.get(args[1],args[2]);
+                        else {
+							import_key.privatekey(args[1], args[2]);
+						}
+                        break;
+                        case "write-message":write_message.write_message1(args[1], args[2], args[3]);
+                        break;
+                        default:
+                        {
+                        	System.out.println("Ka ndodhur nje problem");
+                        	System.exit(1);
+                        }
+                        case "read-message": read_message.read_message1(args[1]);
+                        break;
 				   }
 				catch (ArrayIndexOutOfBoundsException e ) { 
 					System.out.println ("There was a mistake during your writing of commands");
