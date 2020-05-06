@@ -1,106 +1,114 @@
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.interfaces.RSAPublicKey;
+import java.security.interfaces.RSAPrivateKey;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPublicKeySpec;
+import java.security.spec.RSAPrivateKeySpec;
 import java.util.Base64;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-public class write_message{
-		
-public static String write(String name, String message) throws ParserConfigurationException, SAXException, IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException {
-		
 
-		SecureRandom sr = new SecureRandom();
-		byte[] IV = new byte[8];
-		sr.nextBytes(IV);
-		
-		IvParameterSpec iv = new IvParameterSpec(IV);
-		SecretKey key = KeyGenerator.getInstance("DES").generateKey();
-
-		 String s="keys/";
-		 String a =s.concat(name);
-		 String b =a.concat(".pub.xml");
-	     File f = new File(b);
-		
-		if(!f.exists()) {
-			System.out.println("Gabim: Celesi publik "+name+" nuk ekziston.");
-			System.exit(1);
-		}
-		AlgorithmParameterSpec iv2= iv;
-		Base64.Encoder encoder = Base64.getEncoder(); 
-		Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
-		cipher.init(Cipher.ENCRYPT_MODE, key, iv2);
-		byte[] mes = message.getBytes("UTF8");
-		byte[] ciphertext = cipher.doFinal(mes);
-		String EncryptedMessage = encoder.encodeToString(ciphertext);
-		
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		Document document = dBuilder.parse(f);
-		
-		String modulus = document.getElementsByTagName("Modulus").item(0).getTextContent();
-		String exponent = document.getElementsByTagName("Exponent").item(0).getTextContent();
-		
-		byte[] mod = Base64.getDecoder().decode(new String(modulus).getBytes("UTF-8"));
-		byte[] ex = Base64.getDecoder().decode(new String(exponent).getBytes("UTF-8"));
-		
-		BigInteger M = new BigInteger(1,mod);
-		BigInteger E = new BigInteger(1,ex);
-		
-		
-		RSAPublicKeySpec pKeySpec =new RSAPublicKeySpec(M, E);
-		
-		Cipher cipher1 = Cipher.getInstance("RSA");
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		RSAPublicKey key1 = (RSAPublicKey) keyFactory.generatePublic(pKeySpec);
-		cipher1.init(Cipher.ENCRYPT_MODE, key1);
-		byte[] mes1 = key.getEncoded();
-		cipher1.update(mes1);
-		byte[] emessage = cipher1.doFinal();
-		
-		String EncryptedKey = encoder.encodeToString(emessage);
-		String NAME = encoder.encodeToString(name.getBytes("UTF8"));
-		String Iv = encoder.encodeToString(IV);
-		  
-		String message1= (((NAME.concat(".")).concat(Iv).concat(".")).concat(EncryptedKey.concat("."))).concat(EncryptedMessage);
+public class read_message {
 	
-		return message1;
-	}
+	
 
-    static void write1(String name, String message, String path) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException, ParserConfigurationException, SAXException {
-    	if(path.endsWith(".txt"))
-		{
-			
-			 FileWriter file = new FileWriter(("keys/").concat(path));
-			   file.write(write(name, message));
-				    file.close();
-				    System.out.println("Celesi publik u ruajt ne fajllin "+ "'" +path +"'");
-		}else {
+	 static void read(String str) throws IOException, ParserConfigurationException, SAXException, InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
+	  { 
+	
+		 String[] arrOfStr = str.split("\\.");
 		
-			System.out.println("Fajlli" +"'" +path +"'"+ "nuk eshte valid." );
-		}
-    }
-    static void write2(String name,String message ) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException, ParserConfigurationException, SAXException {
-				    System.out.println(write(name, message));
-    }
+		
+		byte[] name = Base64.getDecoder().decode(arrOfStr[0]);
+	    String NAME =  new String(name);
+	    
+        byte[] iv = Base64.getDecoder().decode(arrOfStr[1]);
+        byte[] bytes = Base64.getDecoder().decode(arrOfStr[2]);
+        byte[] encryptionM = Base64.getDecoder().decode(arrOfStr[3]); 
+       
 
+        System.out.println("Marresi:" + NAME);
+
+	    String s="keys/";
+	    String a =s.concat(NAME);
+	    String b =a.concat(".xml");
+        File f = new File(b);
+        if (f.exists()) 
+    {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+ 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+ 		Document fromdoc = dBuilder.parse(f);
+
+ 		String modulus = fromdoc.getElementsByTagName("Modulus").item(0).getTextContent();
+ 		String exponent = fromdoc.getElementsByTagName("D").item(0).getTextContent();
+ 		
+ 		byte[] mod = Base64.getDecoder().decode(new String(modulus).getBytes("UTF-8"));
+ 		byte[] ex = Base64.getDecoder().decode(new String(exponent).getBytes("UTF-8"));
+ 		
+ 		BigInteger M = new BigInteger(1,mod);
+ 		BigInteger E = new BigInteger(1,ex);
+ 		
+ 	    RSAPrivateKeySpec privateKeySpec = new RSAPrivateKeySpec(M, E);
+ 	    
+ 	    Cipher cipher = Cipher.getInstance("RSA");
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		RSAPrivateKey key = (RSAPrivateKey) keyFactory.generatePrivate(privateKeySpec);
+		cipher.init(Cipher.DECRYPT_MODE, key );
+		byte[] ciphertext = cipher.doFinal(bytes);
+		
+ 	    byte[] KEY = ciphertext;
+ 	    
+ 	    AlgorithmParameterSpec Iv = new IvParameterSpec(iv);
+		Key desKey = new SecretKeySpec(KEY, "DES");
+		
+		Cipher dCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+		
+		dCipher.init(Cipher.DECRYPT_MODE, desKey, Iv);
+				
+	
+		byte[] plaintext = dCipher.doFinal(encryptionM);
+ 	    byte[] theMessage = plaintext;
+ 	    String  MESSAGE = new String(theMessage, StandardCharsets.UTF_8);
+ 	    System.out.print("Mesazhi: "+MESSAGE);
+	 
+ 	    
+    } else {
+         System.out.println("Celesi privat '" + NAME + "' nuk ekziston");
+        } 
+    }
+	static void read1(String str) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, IOException, ParserConfigurationException, SAXException {
+		if(str.endsWith(".txt")){
+
+			FileReader fr =  new FileReader(("keys/").concat(str)); 
+			  int i; 
+			  String m="";
+				while ((i=fr.read()) != -1) 
+				    m=m+(char) i;
+				read(m);
+				fr.close();
+			}  
+		else {
+			read(str);
+		}
+			 
+	}
 }
+ 
+  
+
