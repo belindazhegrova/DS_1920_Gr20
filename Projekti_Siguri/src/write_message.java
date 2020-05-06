@@ -24,7 +24,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
 public class write_message{
 		
 public static String write(String name, String message) throws ParserConfigurationException, SAXException, IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException {
@@ -63,8 +62,8 @@ public static String write(String name, String message) throws ParserConfigurati
 		
 		byte[] mod = Base64.getDecoder().decode(new String(modulus).getBytes("UTF-8"));
 		byte[] ex = Base64.getDecoder().decode(new String(exponent).getBytes("UTF-8"));
-	
-	        BigInteger M = new BigInteger(1,mod);
+		
+		BigInteger M = new BigInteger(1,mod);
 		BigInteger E = new BigInteger(1,ex);
 		
 		
@@ -105,3 +104,4 @@ public static String write(String name, String message) throws ParserConfigurati
     }
 
 }
+
