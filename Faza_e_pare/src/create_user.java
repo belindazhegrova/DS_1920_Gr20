@@ -66,12 +66,7 @@ public class create_user {
         	 System.out.println("Gabim:Emri i celesit duhet te permbaje vetem shkronja, numra dhe underscore");
 		}
        
-        
-        
-                   	 
-
-      
-    }
+   }
 
     static KeyPair createKeyPair(int keyLength) throws NoSuchAlgorithmException {
         KeyPairGenerator keygen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
