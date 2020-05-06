@@ -63,3 +63,45 @@ public static String write(String name, String message) throws ParserConfigurati
 		
 		byte[] mod = Base64.getDecoder().decode(new String(modulus).getBytes("UTF-8"));
 		byte[] ex = Base64.getDecoder().decode(new String(exponent).getBytes("UTF-8"));
+	
+	        BigInteger M = new BigInteger(1,mod);
+		BigInteger E = new BigInteger(1,ex);
+		
+		
+		RSAPublicKeySpec pKeySpec =new RSAPublicKeySpec(M, E);
+		
+		Cipher cipher1 = Cipher.getInstance("RSA");
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		RSAPublicKey key1 = (RSAPublicKey) keyFactory.generatePublic(pKeySpec);
+		cipher1.init(Cipher.ENCRYPT_MODE, key1);
+		byte[] mes1 = key.getEncoded();
+		cipher1.update(mes1);
+		byte[] emessage = cipher1.doFinal();
+		
+		String EncryptedKey = encoder.encodeToString(emessage);
+		String NAME = encoder.encodeToString(name.getBytes("UTF8"));
+		String Iv = encoder.encodeToString(IV);
+		  
+		String message1= (((NAME.concat(".")).concat(Iv).concat(".")).concat(EncryptedKey.concat("."))).concat(EncryptedMessage);
+	
+		return message1;
+	}
+
+    static void write1(String name, String message, String path) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException, ParserConfigurationException, SAXException {
+    	if(path.endsWith(".txt"))
+		{
+			
+			 FileWriter file = new FileWriter(("keys/").concat(path));
+			   file.write(write(name, message));
+				    file.close();
+				    System.out.println("Celesi publik u ruajt ne fajllin "+ "'" +path +"'");
+		}else {
+		
+			System.out.println("Fajlli" +"'" +path +"'"+ "nuk eshte valid." );
+		}
+    }
+    static void write2(String name,String message ) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException, ParserConfigurationException, SAXException {
+				    System.out.println(write(name, message));
+    }
+
+}
