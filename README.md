@@ -49,13 +49,14 @@ Dekripton ciphertextin në plaintext me dy çelsat tonë përmes four-square cip
 
 <img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915274/77795958-bb575e00-706e-11ea-87dd-816fbae84569.png">
 
-------------------------------------------FAZA E DYTE----------------------------------------------------------------------------
+-------------------------------------------------------FAZA E DYTE-------------------------------------------------
 
 Komanda1:create-user
 
 Krijon një çift të publik/privat të RSA me emrat <name>.xml dhe <name>.pub.xml brenda
 direktoriumit të çelësave keys.
 Direktoriumi i çelësave keys është folder që i mban çelësat publik dhe privat.
+
 
 <img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915332/81133981-8f73a600-8f53-11ea-849e-0bef9bc75fc3.PNG">
 
