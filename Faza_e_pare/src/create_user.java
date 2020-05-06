@@ -94,7 +94,7 @@ public class create_user {
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         RSAPrivateCrtKeySpec spec = keyFactory.getKeySpec(privateKey, RSAPrivateCrtKeySpec.class);
         StringBuilder sb = new StringBuilder();
-
+         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
         sb.append("<RSAKeyValue>" + NL);
         sb.append(getElement("Modulus", spec.getModulus()));
         sb.append(getElement("Exponent", spec.getPublicExponent()));
