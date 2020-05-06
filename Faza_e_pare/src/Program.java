@@ -36,7 +36,7 @@ public class Program {
                          default:
                           {
                         	 System.out.println("Gabim1");
-                           System.exit(1);
+                                 System.exit(1);
                           }
 			                                   }
                         
@@ -44,12 +44,12 @@ public class Program {
                         case "import-key":
                         	if(args[2].startsWith("http"))
                         	{
-                        	import_key.get(args[1],args[2]);
+                        	  import_key.get(args[1],args[2]);
                         	}
                         else if ((args[2].endsWith(".xml")) && !(args[2].endsWith(".pub.xml")))
-                        {
-							import_key.privatekey(args[1], args[2]);
-						}
+                                {
+				     import_key.privatekey(args[1], args[2]);
+			         }
                         else 
                         	import_key.publickey(args[1], args[2]);
                         	
@@ -57,7 +57,7 @@ public class Program {
                                        
                         case "write-message":try{write_message.write1(args[1], args[2], args[3]);}
                         catch (Exception e) {
-							write_message.write2(args[1],args[2]);
+						  write_message.write2(args[1],args[2]);
 						}
                         break;
                         case "read-message": read_message.read1(args[1]);
