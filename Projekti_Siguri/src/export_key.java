@@ -15,7 +15,7 @@ public class export_key
         m=m+(char) i;
 
 } catch (IOException e) {
-
+    // TODO Auto-generated catch block
     e.printStackTrace();
 } return m;
   } 
@@ -27,14 +27,16 @@ public class export_key
 	  File f1 = new File(user);
 	  String p =name.substring(name.indexOf("/") + 1);
 	  if(!f1.exists()) {
-		  System.out.println("Gabim: Celesi private " + "'"+ p + "'" + " nuk ekziston" );
+		  System.out.println("Gabim: Celesi private " + "'"+ p + "'" + " nuk egziston" );
 		  System.exit(1);
 	  }
 	  else {
 		  String s = privatekey(name);
 		  System.out.println(s); 
 		
-	} 
+	}
+	  
+    
   }
  
 
@@ -52,6 +54,7 @@ public class export_key
         m=m+(char) i;
 }
   catch (IOException e) {
+    // TODO Auto-generated catch block
     e.printStackTrace();
 }
   return m;
@@ -65,7 +68,7 @@ public class export_key
       File f2 = new File(userpub);
 	  String p =name.substring(name.indexOf("/") + 1);
 	  if(!f2.exists()) {
-		  System.out.println("Gabim: Celesi public " + "'" + p + "'" + " nuk ekziston" );
+		  System.out.println("Gabim: Celesi public " + "'" + p + "'" + " nuk egziston" );
 		  System.exit(1);
 	  }
 	  else {
@@ -80,16 +83,13 @@ public class export_key
      String thepath=s.concat(t[1]);
      String content=publickey(t[0]);
     
+   System.out.println("Celesi public u ruajt ne fajllin " +"'"+ thepath + "'");
      if(n.endsWith(".xml")==false)
          printss(t[0]);
-     else {
      
       BufferedWriter writer = new BufferedWriter(new FileWriter(thepath));
         writer.write(content);
-        writer.close();
-        System.out.println("Celesi public u ruajt ne fajllin " +"'"+ thepath + "'");
-        }
-     }
+        writer.close();}
 
   
   static void exportfilepri(String r) throws IOException {
