@@ -18,7 +18,7 @@ public class Program {
                         	}
                         	catch (ArrayIndexOutOfBoundsException e)
                         	{
-                        		export_key.printss(args[2]);
+                        		export_key.prints(args[2]);
 							}
                         	
                         break;
