@@ -1,128 +1,114 @@
-
 import java.io.*;
 
-import java.io.PrintWriter;
+public class export_key
+{ 
+  static String privatekey(String name) throws FileNotFoundException
+  { String s="keys/";
+  String a =s.concat(name);
+  String b =a.concat(".xml");
 
+  FileReader fr =  new FileReader(b); 
+  int i; 
+  String m="";
+  try {
+    while ((i=fr.read()) != -1) 
+        m=m+(char) i;
 
-public class import_key {
+} catch (IOException e) {
 
-	  static void privatekey(String name,String path) throws IOException
-	  {
-		  if(path.endsWith(".xml")) {
-	  String content= importfilepri(path);
-	  String s="keys/";
-	  String a =s.concat(name);
-	  String b =a.concat(".xml");
-	  String c= a.concat(".pub.xml");
-	  File f1 = new File(c);
-    	if(check(content)) {
-     String [] split = content.split("<P>");
-     String public_part=split[0].concat("\n</RSAKeyValue>");
-	 try(PrintWriter writer = new PrintWriter(c)){
-	           writer.write(public_part);
-           
-	      }
-	}
-      
-      File f = new File(b);
-     
-      if (f.exists()) 
-    	  System.out.println("Gabim: Celesi "+ "'"+name+"'"+ " ekziston paraprakisht.");
-      else {
-	  BufferedWriter writer = new BufferedWriter(new FileWriter(b));
-	    writer.write(content);
-	    writer.close();
-	    System.out.println("Celesi privat u ruajt ne fajllin " + "'" + b + "'." );
-     	  System.out.println("Celesi publik u ruajt ne fajllin " + "'" + c + "'." );
-	    
-      }
-      }else {
-    	  System.out.println("Gabim: Fajlli i dhene nuk eshte celes valid.");
-	}
-      
-	  }
+    e.printStackTrace();
+} return m;
+  } 
+  static void prints(String name) throws FileNotFoundException
+  {
 	
-	  static boolean check(String sentence) {
-		String search = "</DP>";
-		  if ( sentence.toUpperCase().indexOf(search.toUpperCase()) != -1 )
-			  return true;
-		  else
-			  return false;
+	  String name1="keys/";
+	  String user=name1.concat(name.concat(".xml"));
+	  File f1 = new File(user);
+	  String p =name.substring(name.indexOf("/") + 1);
+	  if(!f1.exists()) {
+		  System.out.println("Gabim: Celesi private " + "'"+ p + "'" + " nuk ekziston" );
+		  System.exit(1);
 	  }
-	  
-	  static void publickey(String name, String path) throws IOException
-	  {
-		  if(path.endsWith(".xml")) {
-		  String content= importfilepub(path);
-		  String s="keys/";
-	  String a =s.concat(name);
-	  String b =a.concat(".pub.xml");
-      File f = new File(b);
-      if (f.exists()) 
-    	  System.out.println("Gabim: Celesi "+ "'"+name+"'"+ " ekziston paraprakisht.");
-      else {
-	  BufferedWriter writer = new BufferedWriter(new FileWriter(b));
-	    writer.write(content);
-	    writer.close();
-    	 System.out.println("Celesi publik u ruajt ne fajllin " + "'" + b + "'." );
-      }
-      }
-		  else {
-			  System.out.println("Gabim: Fajlli i dhene nuk eshte celes valid.");
-		}
-     
-	  }
-	  static String importfilepub( String n) throws IOException {
-		  String t= ("keys/").concat(n);
-		  String m="";
-		  
-			
-		  FileReader fr =  new FileReader(t); 
-		  int i; 
-		 
-		  try {
-			while ((i=fr.read()) != -1) 
-			    m=m+(char) i;
+	  else {
+		  String s = privatekey(name);
+		  System.out.println(s); 
 		
-		  } catch (IOException e) {
-				
-				e.printStackTrace();
-			
-		  }return m;
-			
-		     
-		  }
-	  static String importfilepri( String n) throws IOException {
-		  String t= ("keys/").concat(n);
-		  String m="";
-		  
-		  
-			 
-		  FileReader fr =  new FileReader(t); 
-		  int i; 
-		 
-		  try {
-			while ((i=fr.read()) != -1) 
-			    m=m+(char) i;
-		  
-		  }
-		  catch (IOException e) {
-			
-				e.printStackTrace();
-			} 
-		  
-		  return m;
+	} 
+  }
+ 
+
+  static String publickey(String name) throws FileNotFoundException
+  { String s="keys/";
+  String a =s.concat(name);
+  String b =a.concat(".pub.xml");
+
+  FileReader fr =  new FileReader(b); 
+  
+  int i; 
+  String m="";
+  try {
+    while ((i=fr.read()) != -1) 
+        m=m+(char) i;
 }
-	  static void get(String path, String name) throws IOException {
-		  String r= (("keys/").concat(path)).concat(".xml");
-		String t= url.callURL(name);
-		
-		 BufferedWriter writer = new BufferedWriter(new FileWriter(r));
-		    writer.write(t);
-		    writer.close();
-		    System.out.println("Celesi publik u ruajt ne fajllin "+ "'" +r +"'");
-		
-		   
+  catch (IOException e) {
+    e.printStackTrace();
+}
+  return m;
+  }
+  static void printss(String name) throws FileNotFoundException
+  {
+	  
+      
+      String name1="keys/";
+	  String userpub=name1.concat(name.concat(".pub.xml"));
+      File f2 = new File(userpub);
+	  String p =name.substring(name.indexOf("/") + 1);
+	  if(!f2.exists()) {
+		  System.out.println("Gabim: Celesi public " + "'" + p + "'" + " nuk ekziston" );
+		  System.exit(1);
 	  }
+	  else {
+		  String s = publickey(name);
+		  System.out.println(s); 
+		
+	}
+  }
+  static void exportfilepub( String n) throws IOException {
+     String [] t=n.split(" ");
+     String s= "keys/";
+     String thepath=s.concat(t[1]);
+     String content=publickey(t[0]);
+    
+     if(n.endsWith(".xml")==false)
+         printss(t[0]);
+     else {
+     
+      BufferedWriter writer = new BufferedWriter(new FileWriter(thepath));
+        writer.write(content);
+        writer.close();
+        System.out.println("Celesi public u ruajt ne fajllin " +"'"+ thepath + "'");
+        }
+     }
+
+  
+  static void exportfilepri(String r) throws IOException {
+      String [] t=r.split(" ");
+      String s= "keys/";
+         String thepath=s.concat(t[1]);
+         String content=privatekey(t[0]);
+      
+       System.out.println("Celesi privat u ruajt ne fajllin " +"'"+ thepath + "'");
+
+         if(r.endsWith(".xml")==false)
+             prints(t[0]);
+         else {
+          BufferedWriter writer = new BufferedWriter(new FileWriter(thepath));
+            writer.write(content);
+            writer.close();
+            }
+
+  }
+
 }
 
