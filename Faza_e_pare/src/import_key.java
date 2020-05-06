@@ -7,29 +7,38 @@ import java.io.PrintWriter;
 public class import_key {
 
 	  static void privatekey(String name,String path) throws IOException
-	  { String s="keys/";
+	  {
+		  if(path.endsWith(".xml")) {
+	  String content= importfilepri(path);
+	  String s="keys/";
 	  String a =s.concat(name);
 	  String b =a.concat(".xml");
 	  String c= a.concat(".pub.xml");
-      String content= importfilepri(path);
-  	if(check(content)) {
-  String [] split = content.split("<P>");
-  String public_part=split[0].concat("\n</RSAKeyValue>");
+	  File f1 = new File(c);
+    	if(check(content)) {
+     String [] split = content.split("<P>");
+     String public_part=split[0].concat("\n</RSAKeyValue>");
 	 try(PrintWriter writer = new PrintWriter(c)){
 	           writer.write(public_part);
-	           System.out.println(public_part);
+           
 	      }
 	}
       
       File f = new File(b);
      
-      if (f.isFile()) 
+      if (f.exists()) 
     	  System.out.println("Gabim: Celesi "+ "'"+name+"'"+ " ekziston paraprakisht.");
       else {
 	  BufferedWriter writer = new BufferedWriter(new FileWriter(b));
 	    writer.write(content);
 	    writer.close();
+	    System.out.println("Celesi privat u ruajt ne fajllin " + "'" + b + "'." );
+     	  System.out.println("Celesi publik u ruajt ne fajllin " + "'" + c + "'." );
+	    
       }
+      }else {
+    	  System.out.println("Gabim: Fajlli i dhene nuk eshte celes valid.");
+	}
       
 	  }
 	
@@ -42,26 +51,31 @@ public class import_key {
 	  }
 	  
 	  static void publickey(String name, String path) throws IOException
-	  { String s="keys/";
+	  {
+		  if(path.endsWith(".xml")) {
+		  String content= importfilepub(path);
+		  String s="keys/";
 	  String a =s.concat(name);
 	  String b =a.concat(".pub.xml");
-      String content= importfilepub(path);
       File f = new File(b);
-      if (f.isFile()) 
+      if (f.exists()) 
     	  System.out.println("Gabim: Celesi "+ "'"+name+"'"+ " ekziston paraprakisht.");
       else {
 	  BufferedWriter writer = new BufferedWriter(new FileWriter(b));
 	    writer.write(content);
 	    writer.close();
-	    System.out.println();
+    	 System.out.println("Celesi publik u ruajt ne fajllin " + "'" + b + "'." );
       }
+      }
+		  else {
+			  System.out.println("Gabim: Fajlli i dhene nuk eshte celes valid.");
+		}
+     
 	  }
 	  static String importfilepub( String n) throws IOException {
 		  String t= ("keys/").concat(n);
 		  String m="";
-		  if(n.endsWith(".xml")==false)
-	    	  System.out.println("Gabim: Fajlli i dhene nuk eshte celes valid.");
-		  else {
+		  
 			
 		  FileReader fr =  new FileReader(t); 
 		  int i; 
@@ -73,7 +87,7 @@ public class import_key {
 		  } catch (IOException e) {
 				
 				e.printStackTrace();
-			}
+			
 		  }return m;
 			
 		     
@@ -82,9 +96,7 @@ public class import_key {
 		  String t= ("keys/").concat(n);
 		  String m="";
 		  
-		  if(n.endsWith(".xml")==false)
-	    	  System.out.println("Gabim: Fajlli i dhene nuk eshte celes valid.");
-		  else {
+		  
 			 
 		  FileReader fr =  new FileReader(t); 
 		  int i; 
@@ -99,8 +111,6 @@ public class import_key {
 				e.printStackTrace();
 			} 
 		  
-		     
-		  }
 		  return m;
 }
 	  static void get(String path, String name) throws IOException {
@@ -115,3 +125,4 @@ public class import_key {
 		   
 	  }
 }
+
