@@ -27,8 +27,6 @@ public class create_user {
     	
     }
 
-    
-
    static void create1(String name)throws Exception {
         KeyPair keyPair = createKeyPair(KEY_LENGTH);
         
@@ -37,18 +35,18 @@ public class create_user {
         String name1="keys/";
 		  String user=name1.concat(name.concat(".xml"));
 		  String userpub=name1.concat(name.concat(".pub.xml"));
-		   File f1 = new File(user);
-                   File f2 = new File(userpub);
+		  
+		  File f1 = new File(user);
+          File f2 = new File(userpub);
 	    	
 	    	 String p =name.substring(name.indexOf("/") + 1);
 			  if (f1.exists()&&f2.exists()) {
 	       	  System.out.println("Gabim: Celesi "+ "'"+p+"'"+ " ekziston paraprakisht.");
 			  }
-	         else  {
+	         else 
+	         {
 	       System.out.println("Eshte krijuar celesi privat " +"'"+ f1 + "'");
 	       System.out.println("Eshte krijuar celesi publik " +"'"+ f2 + "'");
-
-	       
 
 	         }
 		
@@ -66,7 +64,12 @@ public class create_user {
         	 System.out.println("Gabim:Emri i celesit duhet te permbaje vetem shkronja, numra dhe underscore");
 		}
        
-   }
+        
+        
+                   	 
+
+      
+    }
 
     static KeyPair createKeyPair(int keyLength) throws NoSuchAlgorithmException {
         KeyPairGenerator keygen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
@@ -86,10 +89,12 @@ public class create_user {
     }
 
     static String getPrivateKeyAsXml(PrivateKey privateKey) throws Exception{
+    	
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         RSAPrivateCrtKeySpec spec = keyFactory.getKeySpec(privateKey, RSAPrivateCrtKeySpec.class);
         StringBuilder sb = new StringBuilder();
-         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
+        
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
         sb.append("<RSAKeyValue>" + NL);
         sb.append(getElement("Modulus", spec.getModulus()));
         sb.append(getElement("Exponent", spec.getPublicExponent()));
@@ -108,7 +113,8 @@ public class create_user {
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         RSAPublicKeySpec spec = keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
         StringBuilder sb = new StringBuilder();
-
+        
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
         sb.append("<RSAKeyValue>" + NL);
         sb.append(getElement("Modulus", spec.getModulus()));
         sb.append(getElement("Exponent", spec.getPublicExponent()));
