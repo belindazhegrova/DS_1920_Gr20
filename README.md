@@ -48,3 +48,76 @@ Nënkomanda decrypt
 Dekripton ciphertextin në plaintext me dy çelsat tonë përmes four-square cipher dhe do të shtyp plaintextin në ekran: 
 
 <img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915274/77795958-bb575e00-706e-11ea-87dd-816fbae84569.png">
+
+------------------------------------------FAZA E DYTE----------------------------------------------------------------------------
+
+Komanda1:create-user
+
+Krijon një çift të publik/privat të RSA me emrat <name>.xml dhe <name>.pub.xml brenda
+direktoriumit të çelësave keys.
+Direktoriumi i çelësave keys është folder që i mban çelësat publik dhe privat.
+
+<img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915332/81133981-8f73a600-8f53-11ea-849e-0bef9bc75fc3.PNG">
+
+Komanda2:delete-user
+
+I largon të gjithë çelësat ekzistues të shfrytëzuesit.
+Sintaksa: ds delete-user <name>
+  
+  <img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915332/81134591-8683d400-8f55-11ea-98d4-633ba01fecc1.PNG">
+
+Komanda3:export-key
+
+Eksporton çelësin publik ose privat të shfrytëzuesit nga direktoriumi i çelësave.
+
+Sintaksa: ds export-key <public|private> <name> [file] 
+  
+Argumenti <public|private> e përcakton llojin e çelësit që eksportohet.
+
+Argumenti <name> e përcakton çelësin e cilit shfrytëzues të eksportohet.
+  
+Argumenti opsional [file] e përcakton shtegun e fajllit se ku do të ruhet çelësi i eksportuar. Nëse
+mungon argumenti atëherë çelësi do të shfaqet në console.
+  
+  
+<img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915332/81134707-dc587c00-8f55-11ea-8eb4-acafe06c31c2.PNG">
+
+Komanda4:import-key
+
+Importon çelësin publik ose privat të shfrytëzuesit nga shtegu i dhënë dhe e vendos në direktoriumin
+e çelësave.
+
+Sintaksa: ds import-key <name> <path>  
+  
+Argumenti <name> e përcakton emrin e çelësit që do të ruhet në direktoriumin keys.
+  
+Argumenti <path> e përcakton shtegun e çelësit që do të importohet.
+  
+  <img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915332/81134852-5426a680-8f56-11ea-983e-8036407a0d58.PNG">
+  
+  Komanda5:write-message
+  
+E shkruan një mesazh të enkriptuar të dedikuar për një shfrytëzues.
+
+Sintaksa: ds write-message <name> <message> [file]
+  
+Argumenti <name> e paraqet marrësin e mesazhit (çelësin publik).
+  
+Argumenti <message> e paraqet mesazhin që do të enkriptohet.
+  
+Argumenti opsional [file] e përcakton shtegun e fajllit se ku do të ruhet mesazhi i enkriptuar.
+
+ <img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915332/81138595-d5843600-8f62-11ea-927d-ea54a0e937c4.PNG">
+ 
+ Komanda6:read-message
+ 
+E dekripton dhe e shfaq në console mesazhin e enkriptuar.
+
+Sintaksa: ds read-message <encrypted-message>
+  
+Argumenti<encrypted-message>paraqetmesazhin e enkriptuar sipas skemës së komandëswrite
+-message.
+  
+  <img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915332/81138649-095f5b80-8f63-11ea-9e6e-38794ae90d8a.PNG">
+  
+
