@@ -30,6 +30,8 @@ public class dbconnect {
 			System.out.println("Error:" + e);
 		}
 	}
+	
+	//inserting data
 public void insert(String kname,String pass) {
 		try {
 			
@@ -42,6 +44,8 @@ public void insert(String kname,String pass) {
 			System.out.println("Error:" + e);
 		}
 	}
+	
+	//deleting data
 	public void  delete(String name) throws SQLException {
 		try {
 		st = (Statement) con.createStatement();
@@ -52,6 +56,7 @@ public void insert(String kname,String pass) {
 			System.out.println("Error:" + e);		
 			}
 	}
+	//user login
 	public String  login(String name) throws SQLException {
 		
 		st = (Statement) con.createStatement();
