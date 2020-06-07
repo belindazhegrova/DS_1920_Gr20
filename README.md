@@ -121,4 +121,18 @@ Argumenti<encrypted-message>paraqetmesazhin e enkriptuar sipas skemës së koman
   
   <img width="338" alt="decrypt" src="https://user-images.githubusercontent.com/52915332/81138649-095f5b80-8f63-11ea-9e6e-38794ae90d8a.PNG">
   
+  -------------------------------------------------------FAZA E TRETE-------------------------------------------------
+  
+  Ne menyre qe te kompajlohet programi duhet se pari te perfshihen ne classpath dy jar files, njera qe sherben per te konektuar programin me databaze dhe tjetra per t'i shfrytezuar metodat per enkriptimin e passwordit ne formen e kerkuar. 
+  
+  Menyra e kompajlimit: javac Program.java.
+  
+  Zgjerimi i komandes "create-user":
+
+Tani kjo komande perveq qe krijon celesin publik gjegjesisht ate privat kerkon nga user-i edhe nje fjalekalim ne menyre qe te behet identifikimi i drejte i userit kur deshiron me login.
+
+Shenimin i fjalekalimit mund te behet ne dy menyra, me dhe pa echo të simboleve në ekran, siq verejme me poshte:
+
+ 
+  
 
