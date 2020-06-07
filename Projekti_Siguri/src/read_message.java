@@ -147,11 +147,11 @@ static boolean sigv(String token,String name,String mess) throws ParserConfigura
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(file);
         doc.getDocumentElement().normalize();
-        String moduliS = doc.getElementsByTagName("Modulus").item(0).getTextContent();
-        String exponentAsString = doc.getElementsByTagName("Exponent").item(0).getTextContent();
-        BigInteger modulus = new BigInteger(1,Base64.getDecoder().decode(moduliS));
-        BigInteger exponent = new BigInteger(1,Base64.getDecoder().decode(exponentAsString));
-        RSAPublicKeySpec keySpec = new RSAPublicKeySpec(modulus, exponent);
+        String modulus = doc.getElementsByTagName("Modulus").item(0).getTextContent();
+        String exponent = doc.getElementsByTagName("Exponent").item(0).getTextContent();
+        BigInteger mod = new BigInteger(1,Base64.getDecoder().decode(modulus));
+        BigInteger exp = new BigInteger(1,Base64.getDecoder().decode(exponent));
+        RSAPublicKeySpec keySpec = new RSAPublicKeySpec(mod, exp);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PublicKey publicKey = keyFactory.generatePublic(keySpec);
 
