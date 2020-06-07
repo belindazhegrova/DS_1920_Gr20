@@ -169,6 +169,9 @@ Jep informata rreth tokenit
 
 nese tokeni nuk eshte valid:
 
+<img width="656" alt="s" src="https://user-images.githubusercontent.com/52915274/83979699-a1f54c80-a910-11ea-853d-0f51edfc2796.png">
+
+
 
 
 Zgjerimi i komandes "write-message"
@@ -179,6 +182,8 @@ Nese tokeni nuk eshte valid atehere pjesa e fundit nuk do te merret parasysh.
   <img width="949" alt="s" src="https://user-images.githubusercontent.com/52915274/83977694-c9ddb380-a902-11ea-90da-3247a91858ec.png">
   
   Nese tokeni nuk eshte valid:
+  
+  <img width="661" alt="s" src="https://user-images.githubusercontent.com/52915274/83979754-f7c9f480-a910-11ea-876d-2921fff53822.png">
   
   
  Komanda e zgjeruar "read-message":
