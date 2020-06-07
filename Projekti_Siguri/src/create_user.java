@@ -7,8 +7,9 @@ import java.security.spec.RSAPrivateCrtKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.regex.Pattern;
 
-public class create_user {
+public class create_user{
 
     static final String KEY_ALGORITHM = "RSA";
     static final int KEY_LENGTH = 1024;
@@ -26,31 +27,47 @@ public class create_user {
 	
     	
     }
+    static boolean valid2(String name2) {
+    	name2 = name2.trim();
+
+	   int lengthp= name2.length();
+	   Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+	   Pattern digitCasePatten = Pattern.compile("[0-9 ]");
+
+	    if(lengthp>5 && specailCharPatten.matcher(name2).find() && digitCasePatten.matcher(name2).find()) {
+	    	return true;
+	    }
+	       
+   return false;
+    }
+
+    
 
    static void create1(String name)throws Exception {
         KeyPair keyPair = createKeyPair(KEY_LENGTH);
         
         if(valid(name)) {
-        	
+		     java.io.Console console = System.console();
+		      String pass = console.readLine("Jepni fjalekalimin: ");
+		      String pass1 = console.readLine("Perserit fjalekalimin: ");
+		
+		  if (pass.equals(pass1) && valid2(pass)) {
+			 
+			  dbconnect connect = new dbconnect();
+		         connect.insert(name, hs_password.hashPassword(pass));
         String name1="keys/";
 		  String user=name1.concat(name.concat(".xml"));
 		  String userpub=name1.concat(name.concat(".pub.xml"));
-		  
-		  File f1 = new File(user);
-          File f2 = new File(userpub);
+		  File f = new File(name);
 	    	
 	    	 String p =name.substring(name.indexOf("/") + 1);
-			  if (f1.exists()&&f2.exists()) {
+			  if (f.isFile()) 
 	       	  System.out.println("Gabim: Celesi "+ "'"+p+"'"+ " ekziston paraprakisht.");
-			  }
-	         else 
-	         {
-	       System.out.println("Eshte krijuar celesi privat " +"'"+ f1 + "'");
-	       System.out.println("Eshte krijuar celesi publik " +"'"+ f2 + "'");
+	         else  {
+	       System.out.println("Eshte krijuar celesi privat " +"'"+ user + "'");
+	       System.out.println("Eshte krijuar celesi publik " +"'"+ userpub + "'");
 
 	         }
-		
-    
         PrivateKey privateKey = keyPair.getPrivate();
         PublicKey publicKey = keyPair.getPublic();
 
@@ -60,6 +77,9 @@ public class create_user {
         String publicKeyAsXml = getPublicKeyAsXml(publicKey);
     
         writeFile(publicKeyAsXml, userpub);}
+		  else {
+			System.out.println("Gabim: Fjalekalimi nuk perputhet ose eshte shume i shkurter apo nuk permban shifra, karaktere");
+		}}
         else {
         	 System.out.println("Gabim:Emri i celesit duhet te permbaje vetem shkronja, numra dhe underscore");
 		}
@@ -70,6 +90,51 @@ public class create_user {
 
       
     }
+   
+   static void create2(String name)throws Exception {
+	   KeyPair keyPair = createKeyPair(KEY_LENGTH);
+       
+       if(valid(name)) {
+		     java.io.Console console = System.console();
+		     String pass =new  String(console.readPassword("Jepni fjalekalimin: "));
+		     String pass1 = new String(console.readPassword("Perserit fjalekalimin: "));
+		    
+		  if (pass.equals(pass1) && valid2(pass)) {
+			
+			  dbconnect connect = new dbconnect();
+		         connect.insert(name, hs_password.hashPassword(pass));
+		
+       String name1="keys/";
+		  String user=name1.concat(name.concat(".xml"));
+		  String userpub=name1.concat(name.concat(".pub.xml"));
+		  File f = new File(name);
+	    	
+	    	 String p =name.substring(name.indexOf("/") + 1);
+			  if (f.isFile()) 
+	       	  System.out.println("Gabim: Celesi "+ "'"+p+"'"+ " ekziston paraprakisht.");
+	         else  {
+	       System.out.println("Eshte krijuar celesi privat " +"'"+ user + "'");
+	       System.out.println("Eshte krijuar celesi publik " +"'"+ userpub + "'");
+
+	         }
+       PrivateKey privateKey = keyPair.getPrivate();
+       PublicKey publicKey = keyPair.getPublic();
+
+       String privateKeyAsXml = getPrivateKeyAsXml(privateKey);
+      
+       writeFile(privateKeyAsXml,user);
+       String publicKeyAsXml = getPublicKeyAsXml(publicKey);
+   
+       writeFile(publicKeyAsXml, userpub);}
+		  else {
+			System.out.println("Gabim: Fjalekalimi nuk perputhet ose eshte shume i shkurter apo nuk permban shifra, karaktere");
+		}}
+       else {
+       	 System.out.println("Gabim:Emri i celesit duhet te permbaje vetem shkronja, numra dhe underscore");
+		}
+      
+       
+   }
 
     static KeyPair createKeyPair(int keyLength) throws NoSuchAlgorithmException {
         KeyPairGenerator keygen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
@@ -89,13 +154,13 @@ public class create_user {
     }
 
     static String getPrivateKeyAsXml(PrivateKey privateKey) throws Exception{
-    	
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         RSAPrivateCrtKeySpec spec = keyFactory.getKeySpec(privateKey, RSAPrivateCrtKeySpec.class);
-        StringBuilder sb = new StringBuilder();
         
+        StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
         sb.append("<RSAKeyValue>" + NL);
+        
         sb.append(getElement("Modulus", spec.getModulus()));
         sb.append(getElement("Exponent", spec.getPublicExponent()));
         sb.append(getElement("P", spec.getPrimeP()));
@@ -113,7 +178,6 @@ public class create_user {
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         RSAPublicKeySpec spec = keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
         StringBuilder sb = new StringBuilder();
-        
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
         sb.append("<RSAKeyValue>" + NL);
         sb.append(getElement("Modulus", spec.getModulus()));
