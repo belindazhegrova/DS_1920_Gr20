@@ -59,14 +59,11 @@ public class Status {
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(file);
         doc.getDocumentElement().normalize();
-
-        String moduliS = doc.getElementsByTagName("Modulus").item(0).getTextContent();
-        String exponentAsString = doc.getElementsByTagName("Exponent").item(0).getTextContent();
-
-        BigInteger modulus = new BigInteger(1,Base64.getDecoder().decode(moduliS));
-        BigInteger exponent = new BigInteger(1,Base64.getDecoder().decode(exponentAsString));
-
-        RSAPublicKeySpec keySpec = new RSAPublicKeySpec(modulus, exponent);
+        String modulus = doc.getElementsByTagName("Modulus").item(0).getTextContent();
+        String exponent = doc.getElementsByTagName("Exponent").item(0).getTextContent();
+        BigInteger mod = new BigInteger(1,Base64.getDecoder().decode(modulus));
+        BigInteger exp = new BigInteger(1,Base64.getDecoder().decode(exponent));
+        RSAPublicKeySpec keySpec = new RSAPublicKeySpec(mod, exp);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PublicKey publicKey = keyFactory.generatePublic(keySpec);
 
@@ -83,13 +80,11 @@ public class Status {
 	static void validd(String exp) {
 		 long currentTimeMillis = System.currentTimeMillis();
          SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-         Date resultdate = new Date(currentTimeMillis);
-         String string = sdf.format(resultdate);
+         Date currentDate = new Date(currentTimeMillis);
+         String Date = sdf.format(currentDate);
 
-
-         int compareTO = string.compareTo(exp);
-         if (compareTO < 0) {
-            
+         int cDateToInt = Date.compareTo(exp);
+         if (cDateToInt < 0) {
              System.out.println("Valid: Po");
              System.out.println("Skadimi: " + exp);}
          else {
@@ -97,22 +92,5 @@ public class Status {
 		}
 	}
 	
-	
-	static void valid_token(String exp,String exp_time) {
-		
-		 Date resultdate = new Date(System.currentTimeMillis());
-		 String s = "" + resultdate;
-	     int a = Integer.parseInt(s);
-		 
-		if (Long.parseLong(exp)>System.currentTimeMillis())
-		{
-			System.out.println("Valid: Po");
-			System.out.println("Skadimi: "+ exp_time);
-		}else 
-			System.out.println("Valid: Jo");
-		
-		
-		
-	}
 
 }
