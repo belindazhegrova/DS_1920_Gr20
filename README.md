@@ -123,6 +123,7 @@ Argumenti<encrypted-message>paraqetmesazhin e enkriptuar sipas skemës së koman
   
   -------------------------------------------------------FAZA E TRETE-------------------------------------------------
   
+  
   Ne menyre qe te kompajlohet programi duhet se pari te perfshihen ne classpath dy jar files, njera qe sherben per te konektuar programin me databaze dhe tjetra per t'i shfrytezuar metodat per enkriptimin e passwordit ne formen e kerkuar. 
   
   Menyra e kompajlimit: javac Program.java.
@@ -131,13 +132,70 @@ Argumenti<encrypted-message>paraqetmesazhin e enkriptuar sipas skemës së koman
 
 Tani kjo komande perveq qe krijon celesin publik gjegjesisht ate privat kerkon nga user-i edhe nje fjalekalim ne menyre qe te behet identifikimi i drejte i userit kur deshiron me login.
 
-Shenimin i fjalekalimit mund te behet ne dy menyra, me dhe pa echo të simboleve në ekran, siq verejme me poshte:
+Shenimin i fjalekalimit mund te behet ne dy menyra, me echo të simboleve në ekran, siq verejme me poshte:
 
 <img width="660" alt="s" src="https://user-images.githubusercontent.com/52915274/83977207-fb548000-a8fe-11ea-9565-dddce03ac7ec.png">
 
 apo pa echo te simboleve:
 
 <img width="509" alt="s" src="https://user-images.githubusercontent.com/52915274/83977240-4078b200-a8ff-11ea-917e-12e23cf6f945.png">
+
+Nese fjalekalimi nuk eshte gjashte ose me shume karaktere apo nuk permban numra apo karaktere tjera speciale atehere celesat nuk gjenerohen derisa fjalekalimi te jete valid.
+
+<img width="552" alt="s" src="https://user-images.githubusercontent.com/52915274/83977290-c7c62580-a8ff-11ea-9bf7-c5feaf7890e3.png">
+
+Zgjerimi i komandes "delete-user":
+
+Emri dhe fjalekalimi i perdorueseve ruhen ne databaze dhe kur thirret kjo komande atehere fshihen celesi privat perkateshisht ai publik si dhe te dhenat e perdoruesit ne fjale ne tabelen e perdorueseve ne databaze.
+
+<img width="433" alt="s" src="https://user-images.githubusercontent.com/52915274/83977363-5e92e200-a900-11ea-895a-2972755927d7.png">
+
+
+Komanda login:
+
+Kjo komande teston çiftin shfrytëzues/fjalëkalim. Në rast suksesi lëshohet një token i nënshkruar i cili mund të përdoret për autentikim të shfrytëzuesit. Tokeni perbehet nga dy pjese, ne pjesen e pare jane te vendosura emri dhe koha kur skadon tokeni dhe ne pjesen e dyte eshte i vendosur nenshkrimi i tokenit.
+
+<img width="664" alt="s" src="https://user-images.githubusercontent.com/52915274/83977472-0c9e8c00-a901-11ea-9ff0-346650773f01.png">
+
+Si dhe pa echo te karaktereve ne ekran:
+
+<img width="659" alt="s" src="https://user-images.githubusercontent.com/52915274/83977511-41124800-a901-11ea-93b0-da8cacdb75e5.png">
+
+Komanda status:
+
+Jep informata rreth tokenit
+
+<img width="655" alt="s" src="https://user-images.githubusercontent.com/52915274/83977555-a1a18500-a901-11ea-947f-8763b5ff27bb.png">
+
+nese tokeni nuk eshte valid:
+
+
+
+Zgjerimi i komandes "write-message"
+
+Nese si argumente jepen perveq argumenteve te zakonshme edhe --sender <token> atehere ciphertext do te zgjerohet me emrin e shfrytezuesit qe i takon tokeni ne utf-8 pastaj te enkoduar ne Base64 si dhe nenshkrimin me celesin privat te sender.
+Nese tokeni nuk eshte valid atehere pjesa e fundit nuk do te merret parasysh.
+  
+  <img width="949" alt="s" src="https://user-images.githubusercontent.com/52915274/83977694-c9ddb380-a902-11ea-90da-3247a91858ec.png">
+  
+  Nese tokeni nuk eshte valid:
+  
+  
+ Komanda e zgjeruar "read-message":
+
+Nese ne ciphertextin e derguar figuron pjesa e derguesit dhe nenshkrimit atëherë do të tentohet verifikimi i atij nënshkrimi duke përdorur çelësin publik të dërguesit.
+
+<img width="947" alt="s" src="https://user-images.githubusercontent.com/52915274/83977755-4b354600-a903-11ea-834f-fde736fbd512.png">
+
+Nese nuk figuron pjesa e fundit atehere do te ekzekutohet si ne fazen e dyte.
+
+Nese mungon celesi publik i sender atehere do te paraqitet si me poshte:
+
+<img width="944" alt="s" src="https://user-images.githubusercontent.com/52915274/83977819-a1a28480-a903-11ea-9093-72884920282b.png">
+
+
+
+
 
 
  
