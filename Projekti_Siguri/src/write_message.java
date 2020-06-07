@@ -1,4 +1,6 @@
+
 import java.io.File;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -6,12 +8,20 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -32,7 +42,7 @@ public static String write(String name, String message) throws ParserConfigurati
 		SecureRandom sr = new SecureRandom();
 		byte[] IV = new byte[8];
 		sr.nextBytes(IV);
-		
+	
 		IvParameterSpec iv = new IvParameterSpec(IV);
 		SecretKey key = KeyGenerator.getInstance("DES").generateKey();
 
@@ -99,9 +109,73 @@ public static String write(String name, String message) throws ParserConfigurati
 			System.out.println("Fajlli" +"'" +path +"'"+ "nuk eshte valid." );
 		}
     }
-    static void write2(String name,String message ) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException, ParserConfigurationException, SAXException {
-				    System.out.println(write(name, message));
-    }
+   
+    static void write3(String name, String message,String token) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException, ParserConfigurationException, SAXException, IOException, SignatureException {
+       String[] token1= token.split("\\.");
+      
+      
+       
+       
+       byte[] payload = Base64.getDecoder().decode(token1[0]);
+		String data = new String(payload);
+		String[] name1 = data.split("'");
+		String name2 = name1[3];
+		Base64.Encoder encoder = Base64.getEncoder();
+		String Sender = encoder.encodeToString(name2.getBytes("UTF8"));
+      
+        String part1 = write(name,message);
+    	String[] part= part1.split("\\.");
+        String base64mess= part[3];
+    	byte[] mess = Base64.getDecoder().decode(base64mess);
+        String messi = new String(mess);
+        String signmess =  rsa(name2, messi);
+      
+        
+        
+        
+        
+        long currentTimeMillis = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date resultdate = new Date(currentTimeMillis);
+        String string = sdf.format(resultdate);
 
+        String part4 = part1.concat("."+Sender+"." + signmess);
+        int compareTO = string.compareTo(name1[7]);
+        if (compareTO < 0) {
+        	System.out.println( part4);
+        	}
+        else {
+        	System.out.println( part1);
+ 		}
+           
 }
 
+    static String rsa(String name, String message1) throws NoSuchAlgorithmException, InvalidKeySpecException, SAXException, IOException, ParserConfigurationException, InvalidKeyException, SignatureException {
+      	 
+    	  File file = new File("keys/" + name + ".xml");
+
+          DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+          DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+          Document doc = docBuilder.parse(file);
+          doc.getDocumentElement().normalize();
+          String moduliS = doc.getElementsByTagName("Modulus").item(0).getTextContent();
+          String D = doc.getElementsByTagName("D").item(0).getTextContent();
+          BigInteger modulus = new BigInteger(1,Base64.getDecoder().decode(moduliS));
+          BigInteger d = new BigInteger(1,Base64.getDecoder().decode(D));
+
+
+          RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(modulus, d);
+          KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+          PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+          Signature signature1 = Signature.getInstance("SHA256withRSA");
+          signature1.initSign(privateKey);   
+          signature1.update((message1).getBytes("UTF-8"));
+          byte[] signature = signature1.sign();
+          String ssignature = Base64.getEncoder().encodeToString(signature);
+          
+          
+          return ssignature;
+          }  
+
+
+}
