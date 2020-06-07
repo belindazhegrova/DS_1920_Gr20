@@ -133,6 +133,13 @@ Tani kjo komande perveq qe krijon celesin publik gjegjesisht ate privat kerkon n
 
 Shenimin i fjalekalimit mund te behet ne dy menyra, me dhe pa echo të simboleve në ekran, siq verejme me poshte:
 
+<img width="660" alt="s" src="https://user-images.githubusercontent.com/52915274/83977207-fb548000-a8fe-11ea-9565-dddce03ac7ec.png">
+
+apo pa echo te simboleve:
+
+<img width="509" alt="s" src="https://user-images.githubusercontent.com/52915274/83977240-4078b200-a8ff-11ea-917e-12e23cf6f945.png">
+
+
  
   
 
