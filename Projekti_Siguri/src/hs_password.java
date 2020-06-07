@@ -1,3 +1,4 @@
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class  hs_password{
@@ -29,34 +30,3 @@ public class  hs_password{
 
 }
 
-
-
-/*import java.security.NoSuchAlgorithmException;
-
-
-public class hs_password {
-	
-	
-	
-	
-	public String hs_password(String password) throws NoSuchAlgorithmException, InvalidKeySpecException{
-		SecureRandom random = new SecureRandom();
-		byte[] salt = new byte[16];
-		random.nextBytes(salt);
-		
-		
-		
-		
-		KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-	    SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-	    byte[] hash = f.generateSecret(spec).getEncoded();
-	    
-	    return String.valueOf(hash);
-
-		
-	}
-	
-	
-
-}
-*/
