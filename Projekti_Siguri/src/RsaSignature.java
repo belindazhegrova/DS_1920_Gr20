@@ -30,15 +30,11 @@ static String rsa(String name) throws NoSuchAlgorithmException, InvalidKeySpecEx
       DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
       Document doc = docBuilder.parse(file);
       doc.getDocumentElement().normalize();
-
-      String moduliS = doc.getElementsByTagName("Modulus").item(0).getTextContent();
-      String D = doc.getElementsByTagName("D").item(0).getTextContent();
-
-      BigInteger modulus = new BigInteger(1,Base64.getDecoder().decode(moduliS));
-      BigInteger d = new BigInteger(1,Base64.getDecoder().decode(D));
-
-
-      RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(modulus, d);
+      String modulus = doc.getElementsByTagName("Modulus").item(0).getTextContent();
+      String exponent = doc.getElementsByTagName("D").item(0).getTextContent();
+      BigInteger mod = new BigInteger(1,Base64.getDecoder().decode(modulus));
+      BigInteger exp= new BigInteger(1,Base64.getDecoder().decode(exponent));
+      RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(mod, exp);
       KeyFactory keyFactory = KeyFactory.getInstance("RSA");
       PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
       
